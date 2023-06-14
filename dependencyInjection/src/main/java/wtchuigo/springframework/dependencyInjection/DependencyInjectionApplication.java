@@ -7,8 +7,11 @@ import org.springframework.context.ApplicationContext;
 import wtchuigo.springframework.dependencyInjection.controllers.ConstructorInjectedController;
 import wtchuigo.springframework.dependencyInjection.controllers.I18nController;
 import wtchuigo.springframework.dependencyInjection.controllers.MyController;
+import wtchuigo.springframework.dependencyInjection.controllers.PetController;
 import wtchuigo.springframework.dependencyInjection.controllers.PropertyInjectedController;
 import wtchuigo.springframework.dependencyInjection.controllers.SetterInjectedController;
+import wtchuigo.springframework.dependencyInjection.service.PrototypeBean;
+import wtchuigo.springframework.dependencyInjection.service.SingletonBean;
 
 @SpringBootApplication
 public class DependencyInjectionApplication {
@@ -16,6 +19,10 @@ public class DependencyInjectionApplication {
 	public static void main(String[] args) {
 		
 		ApplicationContext ctx = SpringApplication.run(DependencyInjectionApplication.class, args);
+		
+		PetController petController = ctx.getBean("petController", PetController.class);
+		System.out.println("--- The Best Pet is ---");
+		System.out.println(petController.whichPetIsTheBest());
 		
 		I18nController i18nController = (I18nController) ctx.getBean("i18nController");
 		System.out.println(i18nController.sayHello());
@@ -36,6 +43,17 @@ public class DependencyInjectionApplication {
 		System.out.println("-----------Constructor");		
 		ConstructorInjectedController constructorInjectedController = (ConstructorInjectedController) ctx.getBean("constructorInjectedController");		
 		System.out.println(constructorInjectedController.getGreeting());
+		
+		System.out.println("-----------Bean Scope -------");	
+		SingletonBean singletonBean1 = ctx.getBean(SingletonBean.class);
+		System.out.println(singletonBean1.getMyScope());		
+		SingletonBean singletonBean2 = ctx.getBean(SingletonBean.class);
+		System.out.println(singletonBean2.getMyScope());
+		
+		PrototypeBean prototypeBean1 = ctx.getBean(PrototypeBean.class);
+		System.out.println(prototypeBean1.getMyScope());
+		PrototypeBean prototypeBean2 = ctx.getBean(PrototypeBean.class);
+		System.out.println(prototypeBean2.getMyScope());
 	}
 
 }
