@@ -1,0 +1,18 @@
+spring:
+  profiles:
+    active: 
+      -  dog
+      -  EN
+      -  dev
+wtchuigo:
+  jdbcurl: YmlUserName
+  password: YmlPasswprd
+  username: YmlUrl
+  
+---
+spring:
+  profiles: prod
+wtchuigo:
+  jdbcurl: YmlProdUrl
+  password: YmlProdPassword
+  username: YmlProdUserName

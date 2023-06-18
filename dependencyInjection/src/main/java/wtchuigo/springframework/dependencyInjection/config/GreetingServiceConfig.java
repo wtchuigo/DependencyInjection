@@ -1,13 +1,15 @@
 package wtchuigo.springframework.dependencyInjection.config;
 
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 
-import wtchuigo.springframework.dependencyInjection.repository.EnglishGreetingRepository;
-import wtchuigo.springframework.dependencyInjection.repository.EnglishGreetingRepositoryImpl;
+import wtchuigo.springframework.dependencyInjection.datasource.FakeDataSource;
+import wtchuigo.springframework.dependencyInjection.repositories.EnglishGreetingRepository;
+import wtchuigo.springframework.dependencyInjection.repositories.EnglishGreetingRepositoryImpl;
 import wtchuigo.springframework.dependencyInjection.service.ConstructorGreetingService;
 import wtchuigo.springframework.dependencyInjection.service.I18nEnglishGreetingService;
 import wtchuigo.springframework.dependencyInjection.service.I18nGermanGreetingService;
@@ -17,9 +19,19 @@ import wtchuigo.springframework.dependencyInjection.service.SetterInjectedGreeti
 import wtchuigo.springframework.pets.PetService;
 import wtchuigo.springframework.pets.PetServiceFactory;
 
+@EnableConfigurationProperties(SfgConstructorConfig.class)
 @ImportResource("classpath:sfgdi-config.xml")
 @Configuration
 public class GreetingServiceConfig {
+	
+	@Bean
+	FakeDataSource fakeDataSource(SfgConstructorConfig sfgConstructorConfig) {
+		FakeDataSource fakeDataSource = new FakeDataSource();
+		fakeDataSource.setUsername(sfgConstructorConfig.getUsername());
+		fakeDataSource.setPassword(sfgConstructorConfig.getPassword());
+		fakeDataSource.setJdbcurl(sfgConstructorConfig.getJdbcurl());
+		return fakeDataSource;
+	}
 	
 	@Bean
 	PetServiceFactory petServiceFactory() {
@@ -29,8 +41,7 @@ public class GreetingServiceConfig {
 	@Profile({"dog", "default"})
 	@Bean()
 	PetService dogPetService(PetServiceFactory petServiceFactory) {
-		return petServiceFactory.getPetService("dog") ;
-		
+		return petServiceFactory.getPetService("dog");		
 	}
 	
 	@Profile("cat")

@@ -1,6 +1,6 @@
 package wtchuigo.springframework.dependencyInjection.service;
 
-import wtchuigo.springframework.dependencyInjection.repository.EnglishGreetingRepository;
+import wtchuigo.springframework.dependencyInjection.repositories.EnglishGreetingRepository;
 
 public class I18nEnglishGreetingService implements GreetingService {
 

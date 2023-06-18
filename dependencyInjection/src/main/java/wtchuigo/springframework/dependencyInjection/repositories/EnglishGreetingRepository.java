@@ -1,4 +1,4 @@
-package wtchuigo.springframework.dependencyInjection.repository;
+package wtchuigo.springframework.dependencyInjection.repositories;
 
 public interface EnglishGreetingRepository {
 	

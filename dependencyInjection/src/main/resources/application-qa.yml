@@ -1,0 +1,4 @@
+wtchuigo:
+  jdbcurl: someUrlforQADB
+  password: QAPassword
+  username: QADBUser

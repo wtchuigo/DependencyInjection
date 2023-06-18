@@ -1,0 +1,4 @@
+wtchuigo:
+  jdbcurl: YmlDEVUrl
+  password: YmlDEVPassword
+  username: YmlDevDBUser
